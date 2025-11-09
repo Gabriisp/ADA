@@ -66,7 +66,7 @@ public class Tienda {
     public static void borrarCliente(Connection conn) {
         Scanner sc = new Scanner(System.in);
 
-        System.out.println("\n--- BORRAR CLIENTE ---");
+        System.out.println("\n BORRAR CLIENTE ");
         System.out.print("Usuario del cliente a borrar: ");
         String usuario = sc.nextLine();
 
