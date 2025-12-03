@@ -35,11 +35,11 @@ public class Main {
         prestamo prestamo3 = new prestamo(3, 3, ahora.minusDays(20), ahora.minusDays(12));
         prestamo prestamo4 = new prestamo(4, 4, ahora.minusDays(25), ahora.minusDays(18));
         prestamo prestamo5 = new prestamo(5, 5, ahora.minusDays(7), null);
-        prestamo prestamo6 = new prestamo(6, 2, ahora.minusDays(5), null);    // Cambiado de 1 a 6
-        prestamo prestamo7 = new prestamo(7, 3, ahora.minusDays(14), ahora.minusDays(6));  // Cambiado de 2 a 7
-        prestamo prestamo8 = new prestamo(8, 4, ahora.minusDays(9), ahora.minusDays(3));   // Cambiado de 3 a 8
-        prestamo prestamo9 = new prestamo(9, 5, ahora.minusDays(30), ahora.minusDays(20)); // Cambiado de 4 a 9
-        prestamo prestamo10 = new prestamo(10, 1, ahora.minusDays(3), null);               // Cambiado de 5 a 10
+        prestamo prestamo6 = new prestamo(6, 2, ahora.minusDays(5), null);    
+        prestamo prestamo7 = new prestamo(7, 3, ahora.minusDays(14), ahora.minusDays(6));  
+        prestamo prestamo8 = new prestamo(8, 4, ahora.minusDays(9), ahora.minusDays(3));  
+        prestamo prestamo9 = new prestamo(9, 5, ahora.minusDays(30), ahora.minusDays(20)); 
+        prestamo prestamo10 = new prestamo(10, 1, ahora.minusDays(3), null);               
 
         añadirl(emf.createEntityManager(), libro1);
         añadirl(emf.createEntityManager(), libro2);
@@ -89,7 +89,7 @@ public class Main {
             }
         }
 
-        // Ejercicio g: Eliminar los préstamos realizados por un determinado usuario (usuario 2)
+        // Ejercicio g: Eliminar los préstamos realizados por un determinado usuario 
         for (int i = 1; i <= 10; i++) {
             prestamo prestamoUsuario = em.find(prestamo.class, i);
             if (prestamoUsuario != null && prestamoUsuario.getIdUsuario() == 2) {
