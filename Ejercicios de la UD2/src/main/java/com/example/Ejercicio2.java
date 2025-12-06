@@ -6,7 +6,7 @@ public class Ejercicio2 {
         String url = "jdbc:mysql://localhost:3306/empresa";
         String user = "root";
         String password = "1234";
-
+        // Establecer la conexión
         try (Connection conexion = DriverManager.getConnection(url, user, password)) {
             empleadosMasDeTresHijos(conexion);
             departamentosSinJefe(conexion);
