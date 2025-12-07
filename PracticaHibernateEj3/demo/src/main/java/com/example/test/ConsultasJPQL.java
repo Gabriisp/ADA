@@ -143,8 +143,7 @@ public class ConsultasJPQL {
         }
     }
 
-    // 6. Dni, nombre y apellidos de los investigadores que trabajan en el proyecto
-    // 4.
+    // 6. Dni, nombre y apellidos de los investigadores que trabajan en el proyecto 4.
     public void ejecutarConsulta6() {
         System.out.println("\n6. Investigadores que trabajan en el 'Proyecto 4':");
         try {
@@ -171,9 +170,8 @@ public class ConsultasJPQL {
         }
     }
 
-    // 7. Toda la información sobre los proyectos en los que trabajan los
-    // investigadores
-    // que participaron en la conferencia 5 (suponiendo que existe Conferencia 5).
+    // 7. Toda la información sobre los proyectos en los que trabajan los investigadores
+    // que participaron en la conferencia 5
     public void ejecutarConsulta7() {
         System.out.println("\n7. Proyectos de investigadores que participaron en 'Conferencia 2':");
         try {
@@ -212,7 +210,7 @@ public class ConsultasJPQL {
     public void ejecutarConsulta8() {
         System.out.println("\n8. Proyectos de investigadores que participaron en una conferencia específica:");
         try {
-            String nombreConferencia = "Conferencia 1"; // Se puede cambiar por cualquier conferencia
+            String nombreConferencia = "Conferencia 1"; 
 
             // Versión con parámetro
             String jpql = "SELECT DISTINCT p " +
@@ -240,8 +238,7 @@ public class ConsultasJPQL {
         }
     }
 
-    // 9. El dni de los investigadores que trabajen en un proyecto cuya fecha de
-    // inicio
+    // 9. El dni de los investigadores que trabajen en un proyecto cuya fecha de inicio
     // sea menor a una fecha dada.
     public void ejecutarConsulta9() {
         System.out.println("\n9. Investigadores en proyectos con fecha de inicio anterior a 2020-08-01:");
