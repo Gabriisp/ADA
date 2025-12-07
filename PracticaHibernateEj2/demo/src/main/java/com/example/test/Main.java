@@ -89,7 +89,7 @@ public class Main {
         EntityTransaction tx = em.getTransaction();
         tx.begin();
 
-        // 1. Crear proyectos CON FECHAS NORMALES
+        // 1. Crear proyectos 
         proyecto p1 = crearproyecto("Proyecto 1", "2020-05-05");
         proyecto p2 = crearproyecto("Proyecto 2", "2020-06-12");
         proyecto p3 = crearproyecto("Proyecto 3", "2020-08-15");
@@ -112,7 +112,7 @@ public class Main {
         investigador inv7 = crearinvestigador("78953321A", "Andrés Fernán Noria", "Avd. Inventada 11", "713442323", "Cádiz");
         investigador inv8 = crearinvestigador("98634571R", "Sofía Martín Luz", "C/ La Virtud 4", "764123623", "Cádiz");
 
-        // 3. Asignar proyectos a investigadores SEGÚN ENUNCIADO
+        // 3. Asignar proyectos a investigadores 
         // Proyecto 1: investigadores 1 y 5 (Juan y Sofía Luque)
         inv1.getProyectos().add(p1);
         p1.getInvestigadores().add(inv1);
@@ -137,7 +137,7 @@ public class Main {
         inv8.getProyectos().add(p4);
         p4.getInvestigadores().add(inv8);
 
-        // 4. PERSISTIR INVESTIGADORES PRIMERO
+        // 4. INVESTIGADORES PRIMERO
         em.persist(inv1);
         em.persist(inv2);
         em.persist(inv3);
@@ -307,7 +307,7 @@ public class Main {
         }
     }
 
-    // PARTE e): ELIMINACIONES - VERSIÓN SIMPLIFICADA
+    // PARTE e): ELIMINACIONES
     private static void ejecutarEliminaciones() {
         EntityTransaction tx = em.getTransaction();
         tx.begin();
