@@ -1,44 +1,44 @@
 package com.example.entidades;
 
-import java.util.Date;
-import java.util.List;
-
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+import java.util.*;
 
 @Entity
-@Table(name = "Conferencia")
+@Table(name = "conferencia")
 public class conferencia {
     @Id
-    @Column(name = "Nombre", length = 20)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)  // CAMBIADO: ID autoincremental
+    private Long id;
+    
+    @Column(name = "nombre", length = 100)
     private String nombre;
-
-    @Column(name = "FechaHoraInicio")
+    
+    @Column(name = "fecha_hora_inicio")
     private Date fechaHoraInicio;
-
-    @Column(name = "Lugar")
+    
+    @Column(name = "lugar")
     private String lugar;
-
-    @Column(name = "NumeroHoras")
-    private Integer numeroHoras;
-
-    @ManyToMany(mappedBy = "conferencias")
-    private List<investigador> investigadores;
-
+    
+    @Column(name = "numero_horas")
+    private Double numeroHoras;  // CAMBIADO: Double en lugar de Integer
+    
+    @OneToMany(mappedBy = "conferencia", cascade = CascadeType.ALL)
+    private Set<asistenciaconferencia> asistencias = new HashSet<>();  // CAMBIADO
+    
     // Constructores
     public conferencia() {}
-
-    public conferencia(String nombre, Date fechaHoraInicio, String lugar, Integer numeroHoras) {
+    
+    public conferencia(String nombre, Date fechaHoraInicio, String lugar, Double numeroHoras) {
         this.nombre = nombre;
         this.fechaHoraInicio = fechaHoraInicio;
         this.lugar = lugar;
         this.numeroHoras = numeroHoras;
     }
-
+    
     // Getters y Setters
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
+    
     public String getNombre() { return nombre; }
     public void setNombre(String nombre) { this.nombre = nombre; }
     
@@ -48,9 +48,9 @@ public class conferencia {
     public String getLugar() { return lugar; }
     public void setLugar(String lugar) { this.lugar = lugar; }
     
-    public Integer getNumeroHoras() { return numeroHoras; }
-    public void setNumeroHoras(Integer numeroHoras) { this.numeroHoras = numeroHoras; }
+    public Double getNumeroHoras() { return numeroHoras; }
+    public void setNumeroHoras(double horas) { this.numeroHoras = (double) horas; }
     
-    public List<investigador> getInvestigadores() { return investigadores; }
-    public void setInvestigadores(List<investigador> investigadores) { this.investigadores = investigadores; }
+    public Set<asistenciaconferencia> getAsistencias() { return asistencias; }
+    public void setAsistencias(Set<asistenciaconferencia> asistencias) { this.asistencias = asistencias; }
 }

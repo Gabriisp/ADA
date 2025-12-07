@@ -9,6 +9,7 @@
         <class>com.example.entidades.proyecto</class>
         <class>com.example.entidades.investigador</class>
         <class>com.example.entidades.conferencia</class>
+        <class>com.example.entidades.asistenciaconferencia</class>
 
         <properties>
             <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/Empresa?createDatabaseIfNotExist=true" />

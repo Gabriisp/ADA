@@ -1,35 +1,30 @@
 package com.example.entidades;
-import java.util.Date;
-import java.util.List;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+import java.util.*;
 
 @Entity
-@Table(name = "Proyecto")
+@Table(name = "proyecto")
 public class proyecto {
     @Id
-    @Column(name = "Nombre", length = 20)
+    @Column(name = "nombre", length = 100)
     private String nombre;
-
-    @Column(name = "FechaInicio")
+    
+    @Column(name = "fecha_inicio")
     private Date fechaInicio;
-
-    @OneToMany(mappedBy = "proyecto", cascade = CascadeType.ALL)
-    private List<investigador> investigadores;
-
+    
+    // RELACIÓN CAMBIADA: ManyToMany bidireccional
+    @ManyToMany(mappedBy = "proyectos")
+    private Set<investigador> investigadores = new HashSet<>();
+    
     // Constructores
     public proyecto() {}
-
+    
     public proyecto(String nombre, Date fechaInicio) {
         this.nombre = nombre;
         this.fechaInicio = fechaInicio;
     }
-
+    
     // Getters y Setters
     public String getNombre() { return nombre; }
     public void setNombre(String nombre) { this.nombre = nombre; }
@@ -37,6 +32,6 @@ public class proyecto {
     public Date getFechaInicio() { return fechaInicio; }
     public void setFechaInicio(Date fechaInicio) { this.fechaInicio = fechaInicio; }
     
-    public List<investigador> getInvestigadores() { return investigadores; }
-    public void setInvestigadores(List<investigador> investigadores) { this.investigadores = investigadores; }
+    public Set<investigador> getInvestigadores() { return investigadores; }
+    public void setInvestigadores(Set<investigador> investigadores) { this.investigadores = investigadores; }
 }
