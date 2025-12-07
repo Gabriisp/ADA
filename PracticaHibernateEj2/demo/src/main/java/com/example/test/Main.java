@@ -204,13 +204,13 @@ public class Main {
             em.persist(a5_4);
 
             tx.commit();
-            System.out.println("✓ Datos insertados correctamente\n");
+            System.out.println("Datos insertados correctamente\n");
 
         } catch (Exception e) {
             if (tx.isActive()) {
                 tx.rollback();
             }
-            System.out.println("✗ Error insertando datos: " + e.getMessage());
+            System.out.println("Error insertando datos: " + e.getMessage());
             e.printStackTrace();
             throw e;
         }
