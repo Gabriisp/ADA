@@ -273,7 +273,7 @@ public class Main {
                 }
             }
         } catch (Exception e) {
-            System.out.println("✗ Error en consultas: " + e.getMessage());
+            System.out.println("Error en consultas: " + e.getMessage());
             e.printStackTrace();
         }
     }
