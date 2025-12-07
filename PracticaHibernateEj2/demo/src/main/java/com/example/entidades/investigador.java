@@ -22,7 +22,7 @@ public class investigador {
     @Column(name = "localidad")
     private String localidad;
     
-    // RELACIÓN CAMBIADA: ManyToMany con Proyecto
+    //  ManyToMany con Proyecto
     @ManyToMany
     @JoinTable(
         name = "investigador_proyecto",
@@ -31,7 +31,7 @@ public class investigador {
     )
     private Set<proyecto> proyectos = new HashSet<>();
     
-    // RELACIÓN CAMBIADA: OneToMany con AsistenciaConferencia
+    // OneToMany con AsistenciaConferencia
     @OneToMany(mappedBy = "investigador", cascade = CascadeType.ALL)
     private Set<asistenciaconferencia> asistenciasConferencias = new HashSet<>();
     

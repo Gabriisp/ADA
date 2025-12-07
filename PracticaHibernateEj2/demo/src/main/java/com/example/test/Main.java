@@ -42,7 +42,7 @@ public class Main {
         em.close();
         emf.close();
         
-       
+        System.out.println("\n=== EJERCICIO COMPLETADO ===");
     }
 
     // MÉTODOS AUXILIARES 
@@ -112,32 +112,34 @@ public class Main {
         investigador inv7 = crearinvestigador("78953321A", "Andrés Fernán Noria", "Avd. Inventada 11", "713442323", "Cádiz");
         investigador inv8 = crearinvestigador("98634571R", "Sofía Martín Luz", "C/ La Virtud 4", "764123623", "Cádiz");
 
-        // 3. Asignar proyectos a investigadores 
-        // Proyecto 1: investigadores 1 y 5 (Juan y Sofía Luque)
-        inv1.getProyectos().add(p1);
-        p1.getInvestigadores().add(inv1);
-        inv5.getProyectos().add(p1);
-        p1.getInvestigadores().add(inv5);
-        
-        // Proyecto 2: investigadores 2 y 4 (Luisa y Pablo)
-        inv2.getProyectos().add(p2);
-        p2.getInvestigadores().add(inv2);
-        inv4.getProyectos().add(p2);
-        p2.getInvestigadores().add(inv4);
-        
-        // Proyecto 3: investigadores 3 y 7 (María y Andrés)
-        inv3.getProyectos().add(p3);
-        p3.getInvestigadores().add(inv3);
-        inv7.getProyectos().add(p3);
-        p3.getInvestigadores().add(inv7);
-        
-        // Proyecto 4: investigadores 6 y 8 (José y Sofía Martín)
-        inv6.getProyectos().add(p4);
-        p4.getInvestigadores().add(inv6);
-        inv8.getProyectos().add(p4);
-        p4.getInvestigadores().add(inv8);
+        // Inicializar las colecciones
+        inv1.setProyectos(new ArrayList<>());
+        inv2.setProyectos(new ArrayList<>());
+        inv3.setProyectos(new ArrayList<>());
+        inv4.setProyectos(new ArrayList<>());
+        inv5.setProyectos(new ArrayList<>());
+        inv6.setProyectos(new ArrayList<>());
+        inv7.setProyectos(new ArrayList<>());
+        inv8.setProyectos(new ArrayList<>());
 
-        // 4. INVESTIGADORES PRIMERO
+        // 3. Asignar proyectos a investigadores según enunciado
+        // Proyecto 1: investigadores 1 y 5
+        inv1.getProyectos().add(p1);
+        inv5.getProyectos().add(p1);
+        
+        // Proyecto 2: investigadores 2 y 4
+        inv2.getProyectos().add(p2);
+        inv4.getProyectos().add(p2);
+        
+        // Proyecto 3: investigadores 3 y 7
+        inv3.getProyectos().add(p3);
+        inv7.getProyectos().add(p3);
+        
+        // Proyecto 4: investigadores 6 y 8
+        inv6.getProyectos().add(p4);
+        inv8.getProyectos().add(p4);
+
+        // 4. PERSISTIR INVESTIGADORES
         em.persist(inv1);
         em.persist(inv2);
         em.persist(inv3);
@@ -147,7 +149,7 @@ public class Main {
         em.persist(inv7);
         em.persist(inv8);
 
-        // 5. Crear conferencias CON FECHAS NORMALES 
+        // 5. Crear conferencias 
         conferencia c1 = crearconferencia("Conferencia 1", "2020-11-02", "San Fernando", 2.5);
         conferencia c2 = crearconferencia("Conferencia 2", "2021-01-12", "Sevilla", 4.0);
         conferencia c3 = crearconferencia("Conferencia 3", "2021-07-01", "San Fernando", 1.5);
@@ -158,7 +160,7 @@ public class Main {
         em.persist(c3);
         em.persist(c4);
 
-        // 6. Crear ASISTENCIAS A CONFERENCIAS SEGÚN ENUNCIADO
+        // 6. Crear ASISTENCIAS A CONFERENCIAS SEGÚN ENUNCIADO 
         // Investigador 1 -> Conferencia 2 
         AsistenciaConferencia a1 = crearAsistencia(inv1, c2, "2021-01-12", "Sevilla", 4.0);
         em.persist(a1);
@@ -179,7 +181,7 @@ public class Main {
         em.persist(a3_3);
         em.persist(a3_4);
         
-        // Investigador 4 -> Conferencia 1 
+        // Investigador 4 -> Conferencias 1 
         AsistenciaConferencia a4_1 = crearAsistencia(inv4, c1, "2020-11-02", "San Fernando", 2.5);
         em.persist(a4_1);
         
@@ -239,61 +241,61 @@ public class Main {
         try {
             System.out.println("\n  i) Investigador 2 ahora solo asiste a Conferencia 2:");
             
-            // Buscar investigador 2 (Luisa Puertas Soto)
             investigador inv2 = em.find(investigador.class, "45768434R");
             
-            // Buscar Conferencia 2 por NOMBRE
-            Query queryC2 = em.createQuery("SELECT c FROM conferencia c WHERE c.nombre = :nombre");
-            queryC2.setParameter("nombre", "Conferencia 2");
+            Query queryC2 = em.createQuery("SELECT c FROM conferencia c WHERE c.nombre = 'Conferencia 2'");
             List<conferencia> resultadosC2 = queryC2.getResultList();
             conferencia c2 = resultadosC2.isEmpty() ? null : resultadosC2.get(0);
             
             if (inv2 != null && c2 != null) {
-                // 1. Eliminar todas las asistencias actuales del investigador 2
                 Query deleteQuery = em.createQuery("DELETE FROM AsistenciaConferencia a WHERE a.investigador.dni = :dni");
                 deleteQuery.setParameter("dni", "45768434R");
                 deleteQuery.executeUpdate();
                 
-                // 2. Crear nueva asistencia solo a conferencia 2
-                AsistenciaConferencia nuevaAsistencia = crearAsistencia(inv2, c2, "2021-01-12", "Sevilla", 4.0);
+                AsistenciaConferencia nuevaAsistencia = new AsistenciaConferencia();
+                nuevaAsistencia.setInvestigador(inv2);
+                nuevaAsistencia.setConferencia(c2);
+                nuevaAsistencia.setFechaInicio(new Date());
+                nuevaAsistencia.setLugar(c2.getLugar());
+                nuevaAsistencia.setNumeroHoras(c2.getNumeroHoras());
                 em.persist(nuevaAsistencia);
-                System.out.println("   " + inv2.getNombreCompleto() + " ahora solo asiste a " + c2.getNombre());
+                
+                System.out.println("    " + inv2.getNombreCompleto() + " ahora solo asiste a " + c2.getNombre());
             }
 
             // ii) Actualizar fecha de conferencia 4 a fecha actual
             System.out.println("\n  ii) Actualizando fecha de Conferencia 4 a fecha actual:");
-            Query queryC4 = em.createQuery("SELECT c FROM conferencia c WHERE c.nombre = :nombre");
-            queryC4.setParameter("nombre", "Conferencia 4");
+            Query queryC4 = em.createQuery("SELECT c FROM conferencia c WHERE c.nombre = 'Conferencia 4'");
             List<conferencia> resultadosC4 = queryC4.getResultList();
             conferencia c4 = resultadosC4.isEmpty() ? null : resultadosC4.get(0);
             
             if (c4 != null) {
                 c4.setFechaHoraInicio(new Date());
-                System.out.println("  " + c4.getNombre() + " actualizada con fecha actual");
+                em.merge(c4);
+                System.out.println("    " + c4.getNombre() + " actualizada con fecha actual: " + new Date());
             }
 
             // iii) Todos los investigadores trabajan en proyecto 3
             System.out.println("\n  iii) Todos los investigadores ahora trabajan en Proyecto 3:");
-            proyecto p3 = em.find(proyecto.class, "Proyecto 3");
+            
+            proyecto p3 = null;
+            try {
+                p3 = em.createQuery("SELECT p FROM proyecto p WHERE p.nombre = 'Proyecto 3'", proyecto.class).getSingleResult();
+            } catch (Exception e) {
+                System.out.println("    Error al buscar Proyecto 3: " + e.getMessage());
+            }
             
             if (p3 != null) {
-                // Obtener todos los investigadores
                 List<investigador> todosInvestigadores = em.createQuery(
                     "SELECT i FROM investigador i", investigador.class).getResultList();
                 
-                // Para cada investigador: limpiar proyectos y añadir solo proyecto 3
                 for (investigador inv : todosInvestigadores) {
                     inv.getProyectos().clear();
                     inv.getProyectos().add(p3);
                     em.merge(inv);
                 }
                 
-                // También actualizar el lado del proyecto
-                p3.getInvestigadores().clear();
-                p3.getInvestigadores().addAll(todosInvestigadores);
-                em.merge(p3);
-                
-                System.out.println("  " + todosInvestigadores.size() + " investigadores ahora trabajan en " + p3.getNombre());
+                System.out.println("   " + todosInvestigadores.size() + " investigadores ahora trabajan en " + p3.getNombre());
             }
 
             tx.commit();
@@ -304,6 +306,7 @@ public class Main {
                 tx.rollback();
             }
             System.out.println(" Error en actualizaciones: " + e.getMessage());
+            e.printStackTrace();
         }
     }
 
@@ -314,29 +317,74 @@ public class Main {
 
         try {
             // i) Eliminar investigador 2
+            System.out.println("\n  i) Eliminando investigador 2...");
             investigador inv2 = em.find(investigador.class, "45768434R");
-            em.remove(inv2);
-            System.out.println("i) Investigador 2 eliminado");
+            if (inv2 != null) {
+                // Primero eliminar las asistencias a conferencias
+                Query deleteAsistencias = em.createQuery("DELETE FROM AsistenciaConferencia a WHERE a.investigador.dni = :dni");
+                deleteAsistencias.setParameter("dni", "45768434R");
+                deleteAsistencias.executeUpdate();
+                
+                // Eliminar las relaciones con proyectos
+                inv2.getProyectos().clear();
+                em.merge(inv2);
+                em.flush();
+                
+                // Finalmente eliminar el investigador
+                em.remove(inv2);
+                System.out.println("Investigador 2 eliminado correctamente");
+            } else {
+                System.out.println("Investigador 2 no encontrado");
+            }
 
             // ii) Eliminar proyecto 1
-            proyecto p1 = em.find(proyecto.class, "Proyecto 1");
-            em.remove(p1);
-            System.out.println("ii) Proyecto 1 eliminado");
+            System.out.println("\n ii) Eliminando proyecto 1...");
+            proyecto p1 = null;
+            try {
+                p1 = em.createQuery("SELECT p FROM proyecto p WHERE p.nombre = 'Proyecto 1'", proyecto.class).getSingleResult();
+            } catch (Exception e) {
+                System.out.println(" Error al buscar Proyecto 1: " + e.getMessage());
+            }
+            
+            if (p1 != null) {
+                for (investigador inv : p1.getInvestigadores()) {
+                    inv.getProyectos().remove(p1);
+                    em.merge(inv);
+                }
+                p1.getInvestigadores().clear();
+                em.merge(p1);
+                em.flush();
+                
+                em.remove(p1);
+                System.out.println("    Proyecto 1 eliminado correctamente");
+            }
 
             // iii) Eliminar conferencia 4
+            System.out.println("\n  iii) Eliminando conferencia 4...");
             Query queryC4 = em.createQuery("SELECT c FROM conferencia c WHERE c.nombre = 'Conferencia 4'");
-            conferencia c4 = (conferencia) queryC4.getSingleResult();
-            em.remove(c4);
-            System.out.println("iii) Conferencia 4 eliminada");
+            List<conferencia> resultadosC4 = queryC4.getResultList();
+            if (!resultadosC4.isEmpty()) {
+                conferencia c4 = resultadosC4.get(0);
+                
+                Query deleteAsistenciasC4 = em.createQuery("DELETE FROM AsistenciaConferencia a WHERE a.conferencia.id = :id");
+                deleteAsistenciasC4.setParameter("id", c4.getId());
+                deleteAsistenciasC4.executeUpdate();
+                
+                em.remove(c4);
+                System.out.println("Conferencia 4 eliminada correctamente");
+            } else {
+                System.out.println(" Conferencia 4 no encontrada");
+            }
 
             tx.commit();
-            System.out.println("\n Eliminaciones realizadas correctamente");
+            System.out.println("\n  Todas las eliminaciones realizadas correctamente");
             
         } catch (Exception e) {
             if (tx.isActive()) {
                 tx.rollback();
             }
-            System.out.println("Error en eliminaciones: " + e.getMessage());
+            System.out.println(" Error en eliminaciones: " + e.getMessage());
+            e.printStackTrace();
         }
     }
 }

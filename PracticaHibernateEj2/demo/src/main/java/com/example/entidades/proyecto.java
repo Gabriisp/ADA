@@ -13,7 +13,7 @@ public class proyecto {
     @Column(name = "fecha_inicio")
     private Date fechaInicio;
     
-    // RELACIÓN CAMBIADA: ManyToMany bidireccional
+    //  ManyToMany bidireccional
     @ManyToMany(mappedBy = "proyectos")
     private Set<investigador> investigadores = new HashSet<>();
     

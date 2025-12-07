@@ -7,7 +7,7 @@ import java.util.*;
 @Table(name = "conferencia")
 public class conferencia {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)  // CAMBIADO: ID autoincremental
+    @GeneratedValue(strategy = GenerationType.IDENTITY) 
     private Long id;
     
     @Column(name = "nombre", length = 100)
@@ -20,10 +20,10 @@ public class conferencia {
     private String lugar;
     
     @Column(name = "numero_horas")
-    private Double numeroHoras;  // CAMBIADO: Double en lugar de Integer
+    private Double numeroHoras;  
     
     @OneToMany(mappedBy = "conferencia", cascade = CascadeType.ALL)
-    private Set<asistenciaconferencia> asistencias = new HashSet<>();  // CAMBIADO
+    private Set<asistenciaconferencia> asistencias = new HashSet<>(); 
     
     // Constructores
     public conferencia() {}
