@@ -23,7 +23,7 @@ public class conferencia {
     private Double numeroHoras;  
     
     @OneToMany(mappedBy = "conferencia", cascade = CascadeType.ALL)
-    private Set<asistenciaconferencia> asistencias = new HashSet<>(); 
+    private Set<asistenciaconferencia> asistencias = new HashSet<>();  
     
     // Constructores
     public conferencia() {}

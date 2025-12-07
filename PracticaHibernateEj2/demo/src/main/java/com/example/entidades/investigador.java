@@ -22,17 +22,13 @@ public class investigador {
     @Column(name = "localidad")
     private String localidad;
     
-    //  ManyToMany con Proyecto
-    @ManyToMany
-    @JoinTable(
-        name = "investigador_proyecto",
-        joinColumns = @JoinColumn(name = "investigador_dni"),
-        inverseJoinColumns = @JoinColumn(name = "proyecto_nombre")
-    )
-    private Set<proyecto> proyectos = new HashSet<>();
+    //  ManyToOne con Proyecto 
+    @ManyToOne
+    @JoinColumn(name = "proyecto_nombre")
+    private proyecto proyecto;  
     
-    // OneToMany con AsistenciaConferencia
-    @OneToMany(mappedBy = "investigador", cascade = CascadeType.ALL)
+    //  OneToMany con AsistenciaConferencia
+    @OneToMany(mappedBy = "investigador", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<asistenciaconferencia> asistenciasConferencias = new HashSet<>();
     
     // Constructores
@@ -59,10 +55,18 @@ public class investigador {
     public String getLocalidad() { return localidad; }
     public void setLocalidad(String localidad) { this.localidad = localidad; }
     
-    public Set<proyecto> getProyectos() { return proyectos; }
-    public void setProyectos(Set<proyecto> proyectos) { this.proyectos = proyectos; }
+    public proyecto getProyecto() { 
+        return proyecto; 
+    }
     
-    public Set<asistenciaconferencia> getAsistenciasConferencias() { return asistenciasConferencias; }
+    public void setProyecto(proyecto proyecto) { 
+        this.proyecto = proyecto;
+    }
+    
+    public Set<asistenciaconferencia> getAsistenciasConferencias() { 
+        return asistenciasConferencias; 
+    }
+    
     public void setAsistenciasConferencias(Set<asistenciaconferencia> asistenciasConferencias) { 
         this.asistenciasConferencias = asistenciasConferencias; 
     }
